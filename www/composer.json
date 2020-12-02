@@ -1,0 +1,28 @@
+{
+    "name": "thomasrc/restapizehnder",
+    "description": "Simple RestAPI for Zehndergroup",
+    "type": "project",
+    "require": {
+        "monolog/monolog": "^2.0@dev",
+        "ext-json": "*",
+      "ext-pdo": "*",
+        "firebase/php-jwt": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Thomas-RC",
+            "email": "t-rossi@outlook.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Controller\\Api\\": "app/Controller/Api",
+            "Http\\": "app/Http",
+            "Middleware\\": "app/Middleware",
+            "Model\\": "app/Model",
+            "Database\\": "database",
+            "Message\\" : "message"
+        }
+    }
+}

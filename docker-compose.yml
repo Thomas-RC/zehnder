@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: my_secret_pw_shh
+      MYSQL_DATABASE: rest
+      MYSQL_USER: devuser
+      MYSQL_PASSWORD: devpass
+    ports:
+      - "9906:3306"
+  web:
+    container_name: php_web
+    build: ./server_config/docker
+    depends_on:
+      - db
+    volumes:
+      - ./www/:/var/www/html/
+      - ./server_config/sites-enabled/:/etc/apache2/sites-enabled
+    ports:
+      - "8100:80"
+    stdin_open: true
+    tty: true
