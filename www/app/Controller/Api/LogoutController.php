@@ -7,20 +7,30 @@ namespace Controller\Api;
 use Middleware\Auth;
 use Model\User;
 
+/**
+ * Class LogoutController
+ * @package Controller\Api
+ */
 class LogoutController extends BaseController
 {
 
+    /**
+     * LogoutController constructor.
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     *
+     */
     public function logout()
     {
 
-        if($this->method !== 'GET')
+        if ($this->method !== 'GET')
         {
-            return $this->sendError('Method '.$this->method.' is not supported');
+            return $this->sendError('Method ' . $this->method . ' is not supported');
         }
 
         $userId = Auth::validateToken();

@@ -4,9 +4,16 @@
 namespace Http;
 
 
-
+/**
+ * Class Router
+ * @package Http
+ */
 class Router
 {
+    /**
+     * @param $url
+     * @return bool
+     */
     public static function call($url)
     {
         if (Loader::loadController($url))
@@ -15,28 +22,33 @@ class Router
         return false;
     }
 
+    /**
+     * @return mixed|string
+     */
     public static function getPath()
     {
         $controller = array_values(array_filter(explode('/', $_SERVER['REQUEST_URI'])));
-        return isset($controller[2])?$controller[1]='':$controller[1];
+        return isset($controller[2]) ? $controller[1] = '' : $controller[1];
     }
 
+    /**
+     * @param $message
+     * @param $status
+     */
     public static function getHeader($message, $status)
     {
-        // Allow from any origin
-        if (isset($_SERVER['HTTP_ORIGIN'])) {
-            // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
-            // you want to allow, and if so:
+
+        if (isset($_SERVER['HTTP_ORIGIN']))
+        {
             header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
             header('Access-Control-Allow-Credentials: true');
             header('Access-Control-Max-Age: 86400');    // cache for 1 day
         }
 
-        // Access-Control headers are received during OPTIONS requests
-        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS')
+        {
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-                // may also be using PUT, PATCH, HEAD etc
                 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
             if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
@@ -48,17 +60,26 @@ class Router
         header('Content-Type: application/json; charset=utf-8');
     }
 
+    /**
+     * @return mixed
+     */
     public static function getParamsPost()
     {
-        $json =  file_get_contents('php://input');
+        $json = file_get_contents('php://input');
         return json_decode($json, true);
     }
 
+    /**
+     * @return mixed
+     */
     public static function getMethod()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
+    /**
+     * @return mixed
+     */
     public static function getAuthorization()
     {
         return $_SERVER['HTTP_AUTHORIZATION'];

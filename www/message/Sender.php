@@ -1,8 +1,18 @@
 <?php
+
 namespace Message;
 
+/**
+ * Class Sender
+ * @package Message
+ */
 class Sender
 {
+    /**
+     * @param $to
+     * @param $subject
+     * @param $message
+     */
     public static function send($to, $subject, $message)
     {
         $headers = 'From: info@ros-design.com' . "\r\n" .

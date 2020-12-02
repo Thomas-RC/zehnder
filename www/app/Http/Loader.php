@@ -1,26 +1,39 @@
 <?php
+
 namespace Http;
 
 
 use Controller\Api\ErrorController;
 
+/**
+ * Class Loader
+ * @package Http
+ */
 class Loader
 {
-    public static function loadController($url) : bool
+    /**
+     * @param $url
+     * @return bool
+     */
+    public static function loadController($url): bool
     {
         return (new Loader)->checkController($url);
     }
 
-    private function checkController($url):bool
+    /**
+     * @param $url
+     * @return bool
+     */
+    private function checkController($url): bool
     {
-        $class = 'Controller\Api\\'.ucfirst($url).'Controller';
+        $class = 'Controller\Api\\' . ucfirst($url) . 'Controller';
 
-        if(!class_exists($class))
+        if (!class_exists($class))
             $class = ErrorController::class;
 
         $controller = new $class();
 
-        if(in_array(ucfirst($url), $controller->getControllers()) && method_exists($class, $url))
+        if (in_array(ucfirst($url), $controller->getControllers()) && method_exists($class, $url))
         {
             $controller->$url();
             return true;

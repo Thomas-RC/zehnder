@@ -7,6 +7,10 @@ namespace Controller\Api;
 use Middleware\Auth;
 use Model\User;
 
+/**
+ * Class ErrorController
+ * @package Controller\Api
+ */
 class ErrorController extends BaseController
 {
 
@@ -18,16 +22,19 @@ class ErrorController extends BaseController
         parent::__construct();
     }
 
+    /**
+     * @param $url
+     */
     public function error($url)
     {
-        if($this->method == 'GET')
+        if ($this->method == 'GET')
         {
             $url = explode('&', $url);
 
-            if(Auth::validateRemember($url[0], $url[1]))
+            if (Auth::validateRemember($url[0], $url[1]))
             {
                 $user = new User();
-                $user->change($url[0],['active' => 1, 'remember_token' => 1]);
+                $user->change($url[0], ['active' => 1, 'remember_token' => 1]);
 
                 $success = [];
                 return $this->sendResponse($success, 'The user has been activated, you can login now. ');

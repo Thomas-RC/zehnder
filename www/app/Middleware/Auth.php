@@ -93,7 +93,7 @@ class Auth
             $token = $authHeader[1];
             JWT::$leeway = 10;
             $decoded = JWT::decode($token, env('SECRET_KEY'), [env('ALGORITHM')]);
-            if($user->checkUser($decoded->data->email)->token_expire == 2)
+            if ($user->checkUser($decoded->data->email)->token_expire == 2)
             {
                 return 0;
             }

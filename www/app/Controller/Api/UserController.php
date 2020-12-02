@@ -1,9 +1,14 @@
 <?php
+
 namespace Controller\Api;
 
 use Middleware\Auth;
 use Model\User;
 
+/**
+ * Class UserController
+ * @package Controller\Api
+ */
 class UserController extends BaseController
 {
 
@@ -15,11 +20,14 @@ class UserController extends BaseController
         parent::__construct();
     }
 
+    /**
+     *
+     */
     public function user()
     {
 
         $userId = Auth::validateToken();
-        if(!$userId)
+        if (!$userId)
         {
             return $this->sendError('You must login first');
         }
