@@ -81,17 +81,6 @@ class Auth
         return false;
     }
 
-    public static function validateExpire($email)
-    {
-        $user = new User();
-        if($user->checkUser($email)->token_expire == 2)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
     /**
      * @return int
      */
@@ -104,11 +93,13 @@ class Auth
             $token = $authHeader[1];
             JWT::$leeway = 10;
             $decoded = JWT::decode($token, env('SECRET_KEY'), [env('ALGORITHM')]);
-            $user->change($decoded->data->email, ['token_expire' => 1]);
+            if($user->checkUser($decoded->data->email)->token_expire == 2)
+            {
+                return 0;
+            }
             return $decoded->data->id;
         } catch (\Exception $exception)
         {
-            //TODO token expire=2
             return 0;
         }
 

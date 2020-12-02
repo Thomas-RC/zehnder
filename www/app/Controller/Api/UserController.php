@@ -28,12 +28,6 @@ class UserController extends BaseController
         $userData = $user->allDataUser($userId);
         $user->save($userData);
 
-        $tokenExpire = Auth::validateExpire($user->getEmail());
-        if($tokenExpire)
-        {
-            return $this->sendError('You must login first');
-        }
-
         $success = [];
         $success['user_id'] = $user->getId();
         $success['user_name'] = $user->getName();

@@ -45,6 +45,7 @@ class LoginController extends BaseController
         $user = new User();
         $userData = $user->checkUser($this->request['email']);
         $user->save($userData);
+        $user->change($user->getEmail(), ['token_expire' => 1]);
 
         $success = [];
         $success['user_id'] = $user->getId();
